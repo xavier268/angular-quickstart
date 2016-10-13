@@ -4,7 +4,7 @@
 
 This folder extends the [angular/quickstart](http://github/angular/quickstart) by providing a way to produced an "ahead-of-time" compiled version, which is then integrated into a docker image with mongo and [restheart](http://restheart.org). The restheart server is used both for serving static assets (undertow) and for providing a secured REST api to the mongo db.
 
-During developement phase, jit comile is still available, and you can see what you are doing on the lite-server.
+During developement phase, jit "compilation" is still available, and you can see what you are doing on the lite-server.
 
 ## Usage
 
