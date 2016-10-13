@@ -2,4 +2,7 @@ node_modules/
 app/
 typings/
 e2e/
+_test-output/
+aot/
+typings/
 .git/
