@@ -98,7 +98,12 @@ with excellent support for Angular apps that use routing.
 Here are the test related scripts:
 * `npm test` - compiles, runs and watches the karma unit tests
 * `npm run e2e` - run protractor e2e tests, written in JavaScript (e2e-spec.js)
-* `npm run aot` - compile "ahead-of-time"(aot) and run the compiled js code.
+* `npm run aot-run` - compile "ahead-of-time"(aot) and run the compiled js code.
+* `npm run aot` - just compile "ahead-of-time"(aot).
+* `npm run docker-run` - make docker image and launch it
+* `npm run docker` - just make docker image
+
+
 
 **Note** : When compiling aot or jit, the index.html is copied either from index-aot.html or from index-jit.html
 

@@ -1,1 +1,5 @@
 node_modules/
+app/
+typings/
+e2e/
+.git/
