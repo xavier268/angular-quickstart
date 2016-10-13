@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cp index-jit.html index.html && tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "docker-build": "npm run aot && docker build -t xavier268/private:ng-rh .",
-    "docker-run": "npm run docker-build && docker run -d -p 4443:4443 xavier268/private:ng-rh",
+    "docker-run": "npm run docker-build && docker run -d -p 443:4443 xavier268/private:ng-rh",
     "pree2e": "npm run webdriver:update",
     "e2e": "tsc && concurrently \"http-server -s\" \"protractor protractor.config.js\" --kill-others --success first",
     "lint": "tslint ./app/**/*.ts -t verbose",

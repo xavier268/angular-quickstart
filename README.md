@@ -39,7 +39,7 @@ These are the "ahead-of-time" comilation scripts :
 
 Docker related scripts
 
-* `npm run docker-run` - make docker image and launch it
+* `npm run docker-run` - make docker image and launch it. You can then connect to *https://localhost* to test it. You can also use *https://localhost/browser* to navigate the API.
 * `npm run docker-build` - just make docker image
 
 **CAUTION** : When compiling aot or jit, the above scripts copy index.html either from index-aot.html or from index-jit.html.
