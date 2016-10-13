@@ -1,92 +1,25 @@
 # Angular QuickStart Source
-(Forked and modified from angular/quickstart)
 
-This repository holds the TypeScript source code of the [angular.io quickstart](https://angular.io/docs/ts/latest/quickstart.html),
-the foundation for most of the documentation samples and potentially a good starting point for your application.
+*Extended from the excellent [angular/quickstart](http://github/angular/quickstart) - October 13, 2016*
 
-It's been extended with testing support so you can start writing tests immediately.
+This folder extends the [angular/quickstart](http://github/angular/quickstart) by providing a way to produced an "ahead-of-time" compiled version, which is then integrated into a docker image with mongo and [restheart](http://restheart.org). The restheart server is used both for serving static assets (undertow) and for providing a secured REST api to the mongo db.
 
-**This is not the perfect arrangement for your application. It is not designed for production.
-It exists primarily to get you started quickly with learning and prototyping in Angular**
+During developement phase, jit comile is still available, and you can see what you are doing on the lite-server.
 
-We are unlikely to accept suggestions about how to grow this QuickStart into something it is not.
-Please keep that in mind before posting issues and PRs.
+## Usage
 
-## Prerequisites
+`git clone` this repo, `npm install` to get started.
 
-Node.js and npm are essential to Angular development.
+Then remove *.git/*, run `git init*` to create a new repo, do not push application specific files into this one.
 
-Get it now if it's not already installed on your machine.
 
-**Verify that you are running at least node `v4.x.x` and npm `3.x.x`**
-by running `node -v` and `npm -v` in a terminal/console window.
-Older versions produce errors.
 
-We recommend [nvm](https://github.com/creationix/nvm) for managing multiple versions of node and npm.
 
-## Create a new project based on the QuickStart
+### available npm scripts
 
-Clone this repo into new project folder (e.g., `my-proj`).
-```bash
-git clone  https://github.com/angular/quickstart  my-proj
-cd my-proj
-```
+General purpose scripts :
 
-We have no intention of updating the source on `angular/quickstart`.
-Discard everything "git-like" by deleting the `.git` folder.
-```bash
-rm -rf .git  # non-Windows
-rd .git /S/Q # windows
-```
-
-### Create a new git repo
-You could [start writing code](#start-development) now and throw it all away when you're done.
-If you'd rather preserve your work under source control, consider taking the following steps.
-
-Initialize this project as a *local git repo* and make the first commit:
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-```
-
-Create a *remote repository* for this project on the service of your choice.
-
-Grab its address (e.g. *`https://github.com/<my-org>/my-proj.git`*) and push the *local repo* to the *remote*.
-```bash
-git remote add origin <repo-address>
-git push -u origin master
-```
-## Install npm packages
-
-> See npm and nvm version notes above
-
-Install the npm packages described in the `package.json` and verify that it works:
-
-**Attention Windows Developers:  You must run all of these commands in administrator mode**.
-
-```bash
-npm install
-npm start
-```
-
-> If the `typings` folder doesn't show up after `npm install` please install them manually with:
-
-> `npm run typings -- install`
-
-The `npm start` command first compiles the application,
-then simultaneously re-compiles and runs the `lite-server`.
-Both the compiler and the server watch for file changes.
-
-Shut it down manually with Ctrl-C.
-
-You're ready to write your application.
-
-### npm scripts
-
-We've captured many of the most useful commands in npm scripts defined in the `package.json`:
-
-* `npm start` - runs the compiler and a server at the same time, both in "watch mode".
+* `npm start` - runs the compiler and the lite-server at the same time, both in "watch mode".
 * `npm run tsc` - runs the TypeScript compiler once.
 * `npm run tsc:w` - runs the TypeScript compiler in watch mode; the process keeps running, awaiting changes to TypeScript files and re-compiling when it sees them.
 * `npm run lite` - runs the [lite-server](https://www.npmjs.com/package/lite-server), a light-weight, static file server, written and maintained by
@@ -95,17 +28,34 @@ We've captured many of the most useful commands in npm scripts defined in the `p
 with excellent support for Angular apps that use routing.
 * `npm run typings` - runs the typings tool.
 * `npm run postinstall` - called by *npm* automatically *after* it successfully completes package installation. This script installs the TypeScript definition files this app requires.
+
 Here are the test related scripts:
 * `npm test` - compiles, runs and watches the karma unit tests
 * `npm run e2e` - run protractor e2e tests, written in JavaScript (e2e-spec.js)
+
+These are the "ahead-of-time" comilation scripts :
 * `npm run aot-run` - compile "ahead-of-time"(aot) and run the compiled js code.
 * `npm run aot` - just compile "ahead-of-time"(aot).
+
+Docker related scripts
+
 * `npm run docker-run` - make docker image and launch it
-* `npm run docker` - just make docker image
+* `npm run docker-build` - just make docker image
 
+**CAUTION** : When compiling aot or jit, the above scripts copy index.html either from index-aot.html or from index-jit.html.
+**Do not modify index.html** directly, or it will be overwritten.
 
+## Building a docker image
 
-**Note** : When compiling aot or jit, the index.html is copied either from index-aot.html or from index-jit.html
+The docker image relies on the *xavier268/restheart image*. This parent image contains
+restheart and mongo. The config files must be in the *etc/* folder. You can add mongo init js scripts in the *mongoscripts/* folder.
+
+When the new image is built :
+* the *dist/* folder is copied, as well as *etc/* and *mongoscripts/*
+* the *node_modules/* is **not** available to docker. Make sure you copy the relevant needed imports
+in the *dist/* folder, by modifying the *copy_modules.sh* utility file first.
+* the restheart server is serving both the application and the API from the **https** internal port 4443. Route to external port as needed, typically 443 for https access. It uses a self signed certificate, that requires browser to accept security exception.
+
 
 ## Testing
 

@@ -1,7 +1,7 @@
 {
-  "name": "angular-quickstart-rh",
+  "name": "quickstart-angular-rh-docker",
   "version": "1.0.0",
-  "description": "QuickStart package.json from the documentation, supplemented with testing support",
+  "description": "QuickStart package.json for Restheart-angular2-docker integration",
   "scripts": {
     "start": "cp index-jit.html index.html && tsc && concurrently \"tsc -w\" \"lite-server\" ",
     "docker-build": "npm run aot && docker build -t xavier268/private:ng-rh .",
@@ -21,7 +21,7 @@
     "aot-run": "npm run aot && lite-server"
   },
   "keywords": [],
-  "author": "",
+  "author": "Xavier Gandillot<xavier@gandillot.com>",
   "licenses": [
     {
       "type": "MIT",
